@@ -1,4 +1,3 @@
-# Реалізація стеку на основі покажчиків для аналізу успішності студентів
 # Клас вузла для однозв'язного списку (елемента стеку)
 class Node:
     def __init__(self, data):
@@ -37,7 +36,15 @@ class StackLinkedList:
             count += 1
             current = current.next  # Переходимо до наступного елемента
         return count  # Повертаємо кількість елементів у стеку
-
+    
+    def to_list(self):
+        """Перетворення стеку в список для зручного аналізу."""
+        current = self.top
+        result = []
+        while current:
+            result.insert(0, current.data)  # Додаємо елементи в порядку вставки
+            current = current.next
+        return result
 
 # Функція для аналізу динаміки успішності за три роки
 def analyze_trends_with_stack(data):
@@ -47,15 +54,14 @@ def analyze_trends_with_stack(data):
     for year_data in data:
         stack.push(year_data)
     
-    temp_stack = StackLinkedList()  # Тимчасовий стек для збереження даних
     results = []  # Список для збереження результатів аналізу
-    
-    # Поки у стеку є хоча б три елементи
-    while stack.size() >= 3:
-        # Витягуємо три останні роки
-        year3 = stack.pop()
-        year2 = stack.pop()
-        year1 = stack.pop()
+    data_list = stack.to_list()  # Перетворюємо стек у список для зручності
+
+    # Проходимо по всіх послідовних трійках років
+    for i in range(len(data_list) - 2):
+        year1 = data_list[i]
+        year2 = data_list[i + 1]
+        year3 = data_list[i + 2]
         
         # Розрахунок середніх балів для кожного року
         avg1 = sum(year1[1]) / len(year1[1])
@@ -64,17 +70,6 @@ def analyze_trends_with_stack(data):
         
         # Додаємо результат у список
         results.append(f"{year1[0]}-{year3[0]}: {avg1:.2f} -> {avg2:.2f} -> {avg3:.2f}")
-        
-        # Повертаємо дані назад у тимчасовий стек для наступного аналізу
-        temp_stack.push(year1)
-        temp_stack.push(year2)
-        temp_stack.push(year3)
-        
-        stack.pop()  # Зсуваємо аналіз на 1 рік назад
-    
-    # Повертаємо всі елементи назад у основний стек
-    while not temp_stack.is_empty():
-        stack.push(temp_stack.pop())
     
     return results  # Повертаємо результати аналізу
 

@@ -70,6 +70,7 @@ print("\nДинаміка успішності (масив):")
 performance_array = DoublyLinkedListArray()  # Створення об'єкта двозв’язного списку
 
 # Додавання даних про оцінки студентів за різні роки
+performance_array.append(2019, [79, 85, 93])
 performance_array.append(2020, [85, 90, 78])
 performance_array.append(2021, [88, 76, 92])
 performance_array.append(2022, [91, 82, 79])

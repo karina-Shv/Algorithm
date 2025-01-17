@@ -25,20 +25,19 @@ class StackArray:
 # Функція для аналізу динаміки успішності за три роки
 def analyze_trends_with_stack(data):
     stack = StackArray()  # Ініціалізація основного стеку
-    
+
     # Додаємо всі дані у стек
     for year_data in data:
         stack.push(year_data)
     
-    temp_stack = StackArray()  # Тимчасовий стек для зберігання витягнутих елементів
     results = []  # Список для збереження результатів аналізу
+    data_length = stack.size()
     
-    # Аналізуємо дані, поки у стеку є хоча б три роки
-    while stack.size() >= 3:
-        # Витягуємо три останні роки зі стеку
-        year3 = stack.pop()
-        year2 = stack.pop()
-        year1 = stack.pop()
+    # Проходимо по всіх послідовних трійках років
+    for i in range(data_length - 2):
+        year1 = stack.stack[i]
+        year2 = stack.stack[i + 1]
+        year3 = stack.stack[i + 2]
         
         # Розрахунок середніх оцінок для кожного року
         avg1 = sum(year1[1]) / len(year1[1])
@@ -47,17 +46,6 @@ def analyze_trends_with_stack(data):
         
         # Додаємо результат у список результатів
         results.append(f"{year1[0]}-{year3[0]}: {avg1:.2f} -> {avg2:.2f} -> {avg3:.2f}")
-        
-        # Повертаємо три роки назад у тимчасовий стек для наступного аналізу
-        temp_stack.push(year1)
-        temp_stack.push(year2)
-        temp_stack.push(year3)
-        
-        stack.pop()  # Зсуваємо аналіз на 1 рік назад
-    
-    # Повертаємо всі дані назад у основний стек
-    while not temp_stack.is_empty():
-        stack.push(temp_stack.pop())
     
     return results  # Повертаємо список результатів аналізу
 
