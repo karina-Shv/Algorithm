@@ -1,3 +1,5 @@
+import time
+
 class Node:
     def __init__(self, year, scores):
         self.year = year           # Рік
@@ -63,6 +65,7 @@ class DoublyLinkedList:
             current = current.next
 
 # Приклад використання
+start_time = time.time()  
 # Ініціалізація списку
 dll = DoublyLinkedList()
 
@@ -84,3 +87,8 @@ dll.analyze()
 dll.pop(2021)
 dll.display()
 dll.analyze()
+
+end_time = time.time()
+duration = end_time - start_time
+duration_ms = duration * 1000
+print(f"Время выполнения: {duration_ms:.2f} миллисекунд")

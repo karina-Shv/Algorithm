@@ -1,3 +1,5 @@
+import time
+
 class DoublyLinkedListArray:
     def __init__(self):
         self.data = []  # Масив для зберігання вузлів, кожен вузол - це словник
@@ -55,12 +57,14 @@ class DoublyLinkedListArray:
 
             current_index = self.data[current_index]['next']
 
+
     def display(self):
         for node in self.data:
             print(f"Рік: {node['year']}, Бали: {node['scores']}")
 
 
 
+start_time = time.time()  
 # Приклад використання
 dll_array = DoublyLinkedListArray()
 
@@ -79,5 +83,11 @@ dll_array.analyze()
 
 # Видалення року та повторний аналіз
 dll_array.pop(2020)
+
 dll_array.display()
 dll_array.analyze()
+    
+end_time = time.time()
+duration = end_time - start_time
+duration_ms = duration * 1000
+print(f"Время выполнения: {duration_ms:.2f} миллисекунд")
